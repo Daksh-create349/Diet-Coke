@@ -87,6 +87,40 @@ The Caffeine Free is for people who know what they want and do not need the stim
 
 ---
 
+## The Evolution Archive
+
+> Five decades. Five cans. One unbroken lineage.
+
+A dedicated timeline section chronicles the complete visual history of Diet Coke — from its silver wave origins to its modern minimalist identity. This is not a slideshow. This is a scroll-driven reveal.
+
+### How It Works
+
+As you scroll through the section, each era peels out from behind the previous one — a layered deck of cans that builds the full lineup one by one, in chronological order:
+
+| Year | Design Era | Description |
+|---|---|---|
+| 1992 | The Silver Wave Era | The iconic dynamic red ribbon on a clean silver canvas. A generation's reference point. |
+| 2000 | Millennial Bold | Oversized vertical typography. Bold red against sleek metallic silver. |
+| 2011 | Marc Jacobs Special Edition | High-fashion bowties and silhouettes. Runway couture meets everyday refreshment. |
+| 2018 | Minimalist Red Stripe | A bold vertical red stripe on a streamlined matte silver can. |
+| Classic | Signature Diet Coke | The legendary design. Zero compromise. Absolute clarity. Unapologetic effervescence. |
+
+### The Cinematic Intro
+
+The section opens with **"EVOLUTION"** at a massive scale — filling the entire screen. As you scroll, it shrinks and ascends to the top of the frame. Only then do the cans begin to appear.
+
+### Hover Interactions
+
+Every can in the lineup is interactive. Hovering over any can:
+- Scales it up and brings it to the absolute foreground
+- Applies a deep red drop-shadow glow to the focused can
+- Blurs and fades all other cans in the lineup (depth-of-field effect)
+- Fades in the publication year, design name, and historical description in the info panel above
+
+The proximity detection system works across the full container — no dead zones, no invisible blocking. You can reach every single can.
+
+---
+
 ## The Partnership Section
 
 <div align="center">
@@ -127,13 +161,14 @@ The frames are preloaded into memory on page initialization. As the user scrolls
 | Hero Canvas | Frame scrubbing (240 frames) | Cinematic product reveal |
 | Manifesto Canvas | Frame scrubbing (300 frames) | Second act visual drive |
 | Flavors Fan-Out | CSS transforms via JS | Three-can spread with depth |
+| Evolution Timeline | Scroll parallax + proximity hover | Five-era historical deck reveal |
 | Prada Section | Scroll parallax | Dual-panel cultural moment |
 | FAQ Section | Mouse parallax | Floating cans in background |
 | Hover Auras | Inline radial gradients | Per-variant color theming |
 
 ### The Hover Interaction System
 
-When the cans fan out in the Flavors section, each individual can becomes an interactive object. Hovering over any can triggers a dynamic background shift — a radial gradient that pulses outward from the center of the screen, tinted to that variant's specific identity color.
+**Flavors Section** — When the cans fan out, each becomes an interactive object. Hovering over any can triggers a dynamic background shift — a radial gradient that pulses outward from the center of the screen, tinted to that variant's specific identity color.
 
 ```
 Cherry can hover    → rgba(228, 30, 42, 0.4) — deep crimson radial pulse
@@ -141,7 +176,15 @@ Caffeine Free hover → rgba(212, 175, 55, 0.3) — warm gold radial pulse
 Classic hover       → rgba(255, 255, 255, 0.2) — cold silver radial pulse
 ```
 
-All transitions run at `700ms ease` for a deliberate, unhurried feel.
+**Evolution Section** — A container-level `mousemove` listener calculates real-time proximity to each can's center point. The closest visible can is activated — no dead zones, no click required.
+
+```
+Can focused   → scale(1.08) + red drop-shadow glow + z-index elevation
+Others        → blur(10px) + opacity(0.25) — depth-of-field effect
+Info panel    → year, design name, and historical description fade in
+```
+
+All transitions run at deliberate, premium easing curves for an unhurried, high-end feel.
 
 ---
 
@@ -150,10 +193,11 @@ All transitions run at `700ms ease` for a deliberate, unhurried feel.
 ```
 SECTION 01  — Hero (fixed canvas + scroll-driven title and info text)
 SECTION 02  — Manifesto (second canvas + typography overlay)
-SECTION 03  — Flavors Fan-Out (three-can interactive spread)
+SECTION 03  — Flavors Fan-Out (three-can interactive spread with hover auras)
 SECTION 04  — The Standard (editorial lifestyle grid)
-SECTION 05  — Devil Wears Prada Partnership (full-bleed white section)
-SECTION 06  — FAQ (floating background cans with mouse parallax)
+SECTION 05  — Evolution Archive (five-era scroll-driven timeline with hover details)
+SECTION 06  — Devil Wears Prada Partnership (full-bleed white section)
+SECTION 07  — FAQ (floating background cans with mouse parallax)
 FOOTER      — Minimal. Credited.
 ```
 
@@ -197,10 +241,11 @@ scroll-animation/
 ├── public/
 │   ├── frames/              (240 animation frames — first sequence)
 │   ├── second-frames/       (300 animation frames — second sequence)
-│   └── flavors/             (product renders — Classic, Cherry, Caffeine Free, Prada)
+│   ├── flavors/             (product renders — Classic, Cherry, Caffeine Free, Prada)
+│   └── evolution/           (five historical can renders — 1992, 2000, 2011, 2018, Classic)
 ├── src/
 │   ├── main.js              (core animation loop, scroll logic, hover interactions)
-│   └── style.css            (global styles, text-outline utility)
+│   └── style.css            (global styles, evolution hover/blur utilities)
 ├── index.html               (full page structure)
 └── README.md                (you are here)
 ```

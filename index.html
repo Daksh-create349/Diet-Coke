@@ -143,34 +143,57 @@
       </div>
     </section>
 
-    <!-- 5. Archive / Footer -->
-    <section class="py-32 px-8 md:px-16 border-t border-white/10 bg-obsidian">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-0 relative">
-        <div class="h-[70vh] relative z-10 group overflow-hidden glass-panel rounded-2xl border border-white/5">
-          <img alt="Lifestyle" class="w-full h-full object-cover grayscale opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDD-CLQCY7KGa8SqSMxrm3uE3JAEW9owPt9rRBPi1fHplEv5BAr94T94W8fHlXRVOmLSlwwgs_xKtM-MNva4vffBi2ghPBxRtiqu8tL6CdQo_A7a9Oqn9oNtso80r5g0amkN2nUst0rNVo_y8l2tiBmwsroKrYIAkzYJWxXVu4jbJjNzPnYvIBEgzMdzn0Uui9HDoXISL6itWyYeYIcS9QlfIlpu7KLuYfVBYAXz7VOCNiT1CKlf7Cjw1ehS1axJmaZ5D9-ftfa0Oc"/>
-          <div class="absolute top-8 left-8">
-            <span class="font-mono text-archive-label text-white bg-black/50 px-2 py-1 backdrop-blur-md rounded">SYS.REQ // CHILLED</span>
-          </div>
-        </div>
-        <div class="flex flex-col justify-center p-8 md:p-24 bg-transparent relative">
-          <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/5 via-transparent to-transparent opacity-50"></div>
-          <h2 class="font-display text-5xl md:text-7xl text-white uppercase leading-[0.9] tracking-tighter mb-8 relative z-10">
-            The <br/> <span class="text-outline">Standard.</span>
-          </h2>
-          <p class="font-body text-body-editorial text-silver relative z-10 max-w-sm">
-            Reject the mundane. Elevate the everyday. A precise formulation of carbonated dark matter, architected for absolute refreshment.
+
+    <!-- Evolution Timeline Section -->
+    <section id="evolution-section" style="height: 400vh;" class="relative border-b border-white/10 bg-[#0f0f0f] z-20">
+      <div class="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center">
+        
+        <!-- Evolution Info Panel (Dynamic tooltip display) -->
+        <div id="evolution-info-panel" class="absolute top-8 md:top-12 left-1/2 -translate-x-1/2 z-30 w-full px-6 text-center pointer-events-none opacity-90 flex flex-col items-center">
+          <div id="evo-info-archive-label" class="font-mono text-xs md:text-sm text-intense-red uppercase tracking-widest mb-1 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">Diet Coke Archive</div>
+          <h3 id="evo-info-year" class="font-display text-5xl md:text-7xl text-white leading-none mb-2 drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)] tracking-tight">EVOLUTION</h3>
+          <h4 id="evo-info-name" class="font-mono text-xs md:text-sm text-silver uppercase tracking-widest mb-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">Hover a can to explore history</h4>
+          <p id="evo-info-desc" class="font-body text-xs md:text-sm text-silver/60 max-w-md mx-auto leading-relaxed h-12 transition-all duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+            Trace the visual history of Diet Coke through its design milestones.
           </p>
-          <div class="mt-12 relative z-10">
-            <a class="inline-flex items-center gap-4 text-intense-red font-mono text-archive-label uppercase hover:text-white transition-colors" href="#">
-              Initiate Sequence <span class="w-8 h-px bg-current shadow-[0_0_8px_rgba(228,30,42,0.8)]"></span>
-            </a>
+        </div>
+
+        <!-- Evolution Cans Container -->
+        <div id="evolution-cans-container" class="relative w-full max-w-4xl h-[80vh] flex items-center justify-center z-20 evolution-cans-container">
+          <!-- Back to Front -->
+          
+          <!-- Classic Can -->
+          <div id="evo-can-classic" class="evo-can-wrapper absolute inset-0 flex items-end justify-center will-change-transform z-0 pointer-events-none">
+            <img src="/evolution/classic.png" alt="Classic Diet Coke" class="evolution-can-img h-[50vh] md:h-[70vh] object-contain drop-shadow-2xl pointer-events-auto cursor-pointer" />
           </div>
+          
+          <!-- 2018 Can -->
+          <div id="evo-can-2018" class="evo-can-wrapper absolute inset-0 flex items-end justify-center will-change-transform z-10 pointer-events-none">
+            <img src="/evolution/2018.png" alt="2018 Diet Coke" class="evolution-can-img h-[50vh] md:h-[70vh] object-contain drop-shadow-2xl pointer-events-auto cursor-pointer" />
+          </div>
+
+          <!-- 2011 Can -->
+          <div id="evo-can-2011" class="evo-can-wrapper absolute inset-0 flex items-end justify-center will-change-transform z-20 pointer-events-none">
+            <img src="/evolution/2011.png" alt="2011 Diet Coke" class="evolution-can-img h-[50vh] md:h-[70vh] object-contain drop-shadow-2xl pointer-events-auto cursor-pointer" />
+          </div>
+
+          <!-- 2000 Can -->
+          <div id="evo-can-2000" class="evo-can-wrapper absolute inset-0 flex items-end justify-center will-change-transform z-30 pointer-events-none">
+            <img src="/evolution/2000.png" alt="2000 Diet Coke" class="evolution-can-img h-[50vh] md:h-[70vh] object-contain drop-shadow-2xl pointer-events-auto cursor-pointer" />
+          </div>
+
+          <!-- 1992 Can (Front) -->
+          <div id="evo-can-1992" class="evo-can-wrapper absolute inset-0 flex items-end justify-center will-change-transform z-40 pointer-events-none">
+            <img src="/evolution/1992.png" alt="1992 Diet Coke" class="evolution-can-img h-[50vh] md:h-[70vh] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)] pointer-events-auto cursor-pointer" />
+          </div>
+          
         </div>
       </div>
     </section>
 
+
     <!-- Devil Wears Prada Partnership Section -->
-    <section id="prada-section" style="height: 300vh; margin-top: -100vh;" class="relative bg-[#f8f8f8] text-obsidian z-50 rounded-t-[3rem] shadow-[0_-20px_60px_rgba(0,0,0,0.5)]">
+    <section id="prada-section" style="height: 300vh;" class="relative bg-[#f8f8f8] text-obsidian z-50 rounded-t-[3rem] shadow-[0_-20px_60px_rgba(0,0,0,0.5)]">
       <div class="sticky top-0 w-full h-screen overflow-hidden flex items-center justify-center">
         
         <!-- Big X Background Element -->

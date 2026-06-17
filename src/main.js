@@ -40,6 +40,17 @@ const textClassic = document.getElementById('text-classic');
 const textCherry = document.getElementById('text-cherry');
 const textCaffeine = document.getElementById('text-caffeine');
 
+// --- EVOLUTION GLOBALS ---
+const evolutionSection = document.getElementById('evolution-section');
+const evolutionYearBg = document.getElementById('evolution-year-bg');
+const evoCan1992 = document.getElementById('evo-can-1992');
+const evoCan2000 = document.getElementById('evo-can-2000');
+const evoCan2011 = document.getElementById('evo-can-2011');
+const evoCan2018 = document.getElementById('evo-can-2018');
+const evoCanClassic = document.getElementById('evo-can-classic');
+const evolutionInfoPanel = document.getElementById('evolution-info-panel');
+const evoInfoArchiveLabel = document.getElementById('evo-info-archive-label');
+
 // --- PRADA ANIMATION GLOBALS ---
 const pradaSection = document.getElementById('prada-section');
 const pradaTextContainer = document.getElementById('prada-text-container');
@@ -289,6 +300,152 @@ function updateFrame() {
     }
   }
 
+  // 5.5 Update Evolution Section Parallax
+  if (evolutionSection) {
+    const rect = evolutionSection.getBoundingClientRect();
+    const relativeScroll = -rect.top;
+    const sectionScrubHeight = window.innerHeight * 3; // 400vh total -> 300vh scrub
+    
+    const progress = sectionScrubHeight <= 0 ? 0 : Math.min(1, Math.max(0, relativeScroll / sectionScrubHeight));
+    
+    // 1. Scroll-based animation of the "EVOLUTION" title
+    if (evolutionInfoPanel) {
+      if (progress < 0.2) {
+        const p = progress / 0.2; // 0 to 1
+        const easeP = 1 - Math.pow(1 - p, 3); // ease-out
+        
+        // Large & centered to small & top
+        const startY = window.innerHeight * 0.35; // approximate vertical center offset
+        const currentY = startY * (1 - easeP);
+        const currentScale = 5.5 - (4.5 * easeP); // Huge scale(5.5) to occupy screen width
+        
+        // Title is fully visible while massive
+        const titleOpacity = 1;
+        
+        evolutionInfoPanel.style.transform = `translate(-50%, ${currentY}px) scale(${currentScale})`;
+        evolutionInfoPanel.style.opacity = titleOpacity;
+        
+        // Keep other texts fully invisible until p is near 0.2
+        const subheaderOpacity = Math.max(0, (p - 0.7) / 0.3);
+        if (evoInfoArchiveLabel) evoInfoArchiveLabel.style.opacity = subheaderOpacity;
+        evoInfoName.style.opacity = subheaderOpacity;
+        evoInfoDesc.style.opacity = subheaderOpacity;
+      } else {
+        // Final top position
+        evolutionInfoPanel.style.transform = 'translate(-50%, 0px) scale(1)';
+        evolutionInfoPanel.style.opacity = '0.9';
+        if (evoInfoArchiveLabel) evoInfoArchiveLabel.style.opacity = '0.9';
+        // Ensure default subheader opacity when not currently hovered
+        if (!evolutionCansContainer.classList.contains('has-hovered')) {
+          evoInfoName.style.opacity = '0.9';
+          evoInfoDesc.style.opacity = '0.9';
+        }
+      }
+    }
+
+    if (progress > 0) {
+      // Phase 1: 1992 Can Entrance (0.20 to 0.40)
+      if (progress < 0.20) {
+        // Before cans appear
+        evoCan1992.style.opacity = 0;
+        evoCan2000.style.opacity = 0;
+        evoCan2011.style.opacity = 0;
+        evoCan2018.style.opacity = 0;
+        evoCanClassic.style.opacity = 0;
+      }
+      else if (progress >= 0.20 && progress < 0.40) {
+        const p = (progress - 0.20) / 0.20;
+        const easeP = 1 - Math.pow(1 - p, 3);
+        
+        evoCan1992.style.opacity = Math.min(1, easeP * 2);
+        evoCan1992.style.transform = `translateX(25%) scale(${0.8 + 0.2 * easeP}) translateY(${50 * (1 - easeP)}px)`;
+        
+        evoCan2000.style.opacity = 0;
+        evoCan2011.style.opacity = 0;
+        evoCan2018.style.opacity = 0;
+        evoCanClassic.style.opacity = 0;
+      }
+      // Phase 2: 2000 peels out (0.40 to 0.55)
+      else if (progress >= 0.40 && progress < 0.55) {
+        const p = (progress - 0.40) / 0.15;
+        const easeP = 1 - Math.pow(1 - p, 3);
+        
+        evoCan1992.style.opacity = 1;
+        evoCan1992.style.transform = 'translateX(25%) scale(1) translateY(0px)';
+        
+        evoCan2000.style.opacity = Math.min(1, easeP * 2);
+        evoCan2000.style.transform = `translateX(${25 - easeP * 15}%) scale(${1 - easeP * 0.1})`;
+        
+        evoCan2011.style.opacity = 0;
+        evoCan2018.style.opacity = 0;
+        evoCanClassic.style.opacity = 0;
+      } 
+      // Phase 3: 2011 peels out (0.55 to 0.70)
+      else if (progress >= 0.55 && progress < 0.70) {
+        const p = (progress - 0.55) / 0.15;
+        const easeP = 1 - Math.pow(1 - p, 3);
+        
+        evoCan1992.style.opacity = 1;
+        evoCan1992.style.transform = 'translateX(25%) scale(1) translateY(0px)';
+        
+        evoCan2000.style.opacity = 1;
+        evoCan2000.style.transform = `translateX(10%) scale(0.9)`;
+        
+        evoCan2011.style.opacity = Math.min(1, easeP * 2);
+        evoCan2011.style.transform = `translateX(${10 - easeP * 15}%) scale(${0.9 - easeP * 0.1})`;
+        
+        evoCan2018.style.opacity = 0;
+        evoCanClassic.style.opacity = 0;
+      }
+      // Phase 4: 2018 peels out (0.70 to 0.85)
+      else if (progress >= 0.70 && progress < 0.85) {
+        const p = (progress - 0.70) / 0.15;
+        const easeP = 1 - Math.pow(1 - p, 3);
+        
+        evoCan1992.style.opacity = 1;
+        evoCan1992.style.transform = 'translateX(25%) scale(1) translateY(0px)';
+        
+        evoCan2000.style.opacity = 1;
+        evoCan2000.style.transform = `translateX(10%) scale(0.9)`;
+        
+        evoCan2011.style.opacity = 1;
+        evoCan2011.style.transform = `translateX(-5%) scale(0.8)`;
+        
+        evoCan2018.style.opacity = Math.min(1, easeP * 2);
+        evoCan2018.style.transform = `translateX(${-5 - easeP * 15}%) scale(${0.8 - easeP * 0.1})`;
+        
+        evoCanClassic.style.opacity = 0;
+      }
+      // Phase 5: Classic peels out (0.85 to 1.0)
+      else if (progress >= 0.85) {
+        const p = Math.min(1, (progress - 0.85) / 0.15);
+        const easeP = 1 - Math.pow(1 - p, 3);
+        
+        evoCan1992.style.opacity = 1;
+        evoCan1992.style.transform = 'translateX(25%) scale(1) translateY(0px)';
+        
+        evoCan2000.style.opacity = 1;
+        evoCan2000.style.transform = `translateX(10%) scale(0.9)`;
+        
+        evoCan2011.style.opacity = 1;
+        evoCan2011.style.transform = `translateX(-5%) scale(0.8)`;
+        
+        evoCan2018.style.opacity = 1;
+        evoCan2018.style.transform = `translateX(-20%) scale(0.7)`;
+        
+        evoCanClassic.style.opacity = Math.min(1, easeP * 2);
+        evoCanClassic.style.transform = `translateX(${-20 - easeP * 15}%) scale(${0.7 - easeP * 0.1})`;
+      }
+    } else {
+      evoCan1992.style.transform = `translateX(25%)`;
+      evoCan1992.style.opacity = 0;
+      evoCan2000.style.opacity = 0;
+      evoCan2011.style.opacity = 0;
+      evoCan2018.style.opacity = 0;
+      evoCanClassic.style.opacity = 0;
+    }
+  }
+
   // 6. Update Prada Section Parallax
   if (pradaSection && pradaTextContainer && pradaArtwork && pradaBigX) {
     const rect = pradaSection.getBoundingClientRect();
@@ -437,6 +594,146 @@ if (canCherry && canCaffeine && canClassic && flavorsGlow) {
   canClassic.addEventListener('mouseleave', () => { 
     flavorsGlow.style.background = defaultBackground;
     flavorsGlow.style.opacity = defaultOpacity;
+  });
+}
+
+// --- EVOLUTION HOVER LOGIC ---
+const evolutionCansContainer = document.getElementById('evolution-cans-container');
+const evoInfoYear = document.getElementById('evo-info-year');
+const evoInfoName = document.getElementById('evo-info-name');
+const evoInfoDesc = document.getElementById('evo-info-desc');
+
+const evolutionData = {
+  'evo-can-1992': {
+    year: '1992',
+    name: 'The Silver Wave Era',
+    description: 'Introduced the iconic dynamic red ribbon logo wrapped around a clean silver canvas, defining the look of a generation.'
+  },
+  'evo-can-2000': {
+    year: '2000',
+    name: 'Millennial Bold',
+    description: 'Stepping into the new millennium with oversized vertical typography and a striking contrast of bold red against sleek metallic silver.'
+  },
+  'evo-can-2011': {
+    year: '2011',
+    name: 'Marc Jacobs Special Edition',
+    description: 'A high-fashion collaboration featuring playful black bowties and sophisticated silhouettes, merging runway couture with everyday refreshment.'
+  },
+  'evo-can-2018': {
+    year: '2018',
+    name: 'Minimalist Red Stripe',
+    description: 'A modern design featuring a bold, vertical red stripe running down the center of a streamlined matte silver can.'
+  },
+  'evo-can-classic': {
+    year: 'Classic',
+    name: 'Signature Diet Coke',
+    description: 'The legendary and beloved design representing zero compromise, absolute clarity, and unapologetic effervescence.'
+  }
+};
+
+const defaultEvoInfo = {
+  year: 'EVOLUTION',
+  name: 'Hover a can to explore history',
+  description: 'Trace the visual history of Diet Coke through its design milestones.'
+};
+
+if (evolutionCansContainer && evoInfoYear && evoInfoName && evoInfoDesc) {
+  const wrappers = evolutionCansContainer.querySelectorAll('.evo-can-wrapper');
+  let activeTimeout = null;
+  let currentlyHoveredId = null;
+
+  const updateHoverState = (mouseX) => {
+    let closestWrapper = null;
+    let minDistance = Infinity;
+
+    wrappers.forEach(wrapper => {
+      // We only target elements that are actually active/visible in scroll space
+      // Check if wrapper opacity is non-zero (so hidden cans in timeline aren't hovered)
+      const opacity = window.getComputedStyle(wrapper).opacity;
+      if (parseFloat(opacity) < 0.1) return;
+
+      const img = wrapper.querySelector('.evolution-can-img');
+      if (!img) return;
+
+      const rect = img.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const distance = Math.abs(mouseX - centerX);
+
+      // We only trigger if cursor is within a reasonable distance or is the absolute closest
+      if (distance < minDistance) {
+        minDistance = distance;
+        closestWrapper = wrapper;
+      }
+    });
+
+    if (closestWrapper && closestWrapper.id !== currentlyHoveredId) {
+      currentlyHoveredId = closestWrapper.id;
+      const data = evolutionData[currentlyHoveredId];
+
+      // Clear previous timeout if any
+      if (activeTimeout) clearTimeout(activeTimeout);
+
+      // Add hover state classes
+      evolutionCansContainer.classList.add('has-hovered');
+      wrappers.forEach(w => {
+        if (w === closestWrapper) {
+          w.classList.add('is-hovered');
+        } else {
+          w.classList.remove('is-hovered');
+        }
+      });
+
+      // Fade out current text
+      evoInfoYear.style.opacity = '0';
+      evoInfoName.style.opacity = '0';
+      evoInfoDesc.style.opacity = '0';
+
+      // Swap content and fade in
+      activeTimeout = setTimeout(() => {
+        evoInfoYear.textContent = data.year;
+        evoInfoName.textContent = data.name;
+        evoInfoDesc.textContent = data.description;
+
+        evoInfoYear.style.color = '#E41E2A'; // Red color on hover
+        evoInfoYear.style.transform = 'scale(1.05)';
+
+        evoInfoYear.style.opacity = '1';
+        evoInfoName.style.opacity = '1';
+        evoInfoDesc.style.opacity = '1';
+      }, 150);
+    }
+  };
+
+  evolutionCansContainer.addEventListener('mousemove', (e) => {
+    updateHoverState(e.clientX);
+  });
+
+  evolutionCansContainer.addEventListener('mouseleave', () => {
+    if (activeTimeout) clearTimeout(activeTimeout);
+    currentlyHoveredId = null;
+
+    // Remove hover state classes
+    evolutionCansContainer.classList.remove('has-hovered');
+    wrappers.forEach(w => w.classList.remove('is-hovered'));
+
+    // Fade out current text
+    evoInfoYear.style.opacity = '0';
+    evoInfoName.style.opacity = '0';
+    evoInfoDesc.style.opacity = '0';
+
+    // Swap back to defaults and fade in
+    activeTimeout = setTimeout(() => {
+      evoInfoYear.textContent = defaultEvoInfo.year;
+      evoInfoName.textContent = defaultEvoInfo.name;
+      evoInfoDesc.textContent = defaultEvoInfo.description;
+
+      evoInfoYear.style.color = '#FFFFFF';
+      evoInfoYear.style.transform = 'scale(1)';
+
+      evoInfoYear.style.opacity = '0.9';
+      evoInfoName.style.opacity = '0.9';
+      evoInfoDesc.style.opacity = '0.9';
+    }, 150);
   });
 }
 
